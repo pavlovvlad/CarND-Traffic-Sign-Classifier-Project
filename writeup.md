@@ -87,18 +87,18 @@ To avoid the warning about the maximal number of the open figures (by default - 
 
 In fourth code cell of the IPython notebook the data augmentation has been implemented in order to improve the classification accuracy for the new images.
 
-To prepeare the augemented data set the Open-CV libraries were has been used from "https://conda.binstar.org/menpo opencv3".
+To prepeare the augemented data set the Open-CV libraries has been used, taken from "https://conda.binstar.org/menpo opencv3".
 
-Info: the 94%-accuracy of the test set has been achieved already without the data augmentation. 
+_Info:_ the 94%-accuracy of the test set has been achieved already without the data augmentation. 
 Also 6 from 7 new traffic signs have been classifed correctly, besides "Road narrows right" - wrongly classified as "Road work".
 
 Using the augemented data should increase the robustness of the classifier as it suggested in https://review.udacity.com/#!/rubrics/481/view. 
 
 So the common data augmentation techniques like rotation, scailing and translation have been applied for the training set in order to decrease the influence of unbalanced data.
 Parameters for the random (uniform distribution) rotation, scaling & translation
-min scale = 0.8
-max scale = 1.2
-max rotation  = 15 in [deg]
+min scale = 0.95
+max scale = 1.05
+max rotation  = 10 in [deg]
 max translation = 5 in [pixels]
 
 As the result the [train, valid] sets with initial RGB-data have been increased more then twice with the new data proportionally as discribed before. The histogram with the number of new samples per class:
@@ -164,9 +164,9 @@ The final model consisted of the following layers:
 | Softmax				|												|
 | 1-Hot-Labels			|												|
 
-The model is based on LeNet-architecture, where the depth-sizes for all layers have been increased by factor 3 and new additional regularization techniques are applied.
+The model is based on LeNet-architecture, where the depth-sizes for all layers have been increased by factor 4 and new additional regularization techniques are applied.
 
-There are models with higher accuracy (up to 99.81%) like GoogLeNet incl. the inception layers with dimension reductions [GoogLeNet2014] and the models like described in [Haloi2015] using spatial transformer layers. The tuning of such network with more than 20 hidden layers will take to much time and resources scope of the project work.
+There are models with higher accuracy (up to 99.81%) like GoogLeNet incl. the inception layers with dimension reductions [GoogLeNet2014] and the models like described in [Haloi2015] using spatial transformer layers. The tuning of such network with more than 20 hidden layers will overcome the time and resources in scope of the project work.
 
 The dropout with keep probability 0.5 (during training stage) has been used by both fully connected layers at the end as reqularization (to avoid the overfitting).
 
@@ -300,4 +300,6 @@ TOP5-softmax-probabilities for each sign type after tuning:
 ![alt text][image21]
 ![alt text][image22]
 
-As it can be seen in figures above the difference between softmax-probabilities of the 1st and 2nd places is greater as 0.9 by all choosen sign types. That indicates that the classes are clearly separable with the introduced classifier or in other words the model is certain to its predictions. 
+As it can be seen in figures above the difference between softmax-probabilities of the 1st and 2nd places is greater as 0.9 by all choosen sign types. That indicates that the classes are clearly separable with the introduced classifier or in other words the model is certain to its predictions.
+
+Both the accuracy on the new images (100%) and the accuracy on the testing set (96,7%) are relatively high. Obviously the 100%-accuracy is imaginary, so if we take more new images into consideration the model will fail. With high propability the model will show pure results by the traffic signs captured from the different perspectives in comparsion to the new images (all images were captured "en-face"). From this point of view the model is overfitted for specific set of variations.
